@@ -1,0 +1,25 @@
+{
+	"$schema": "https://json-schema.org/draft/2019-09/schema",
+	"$id": "http://example.com/example.json",
+	"type": "object",
+	"properties": {
+		"userAuth": {
+			"type": "object",
+			"required": ["username", "password"],
+			"properties": {
+				"username": {
+					"type": "string"
+				},
+				"password": {
+					"type": "string"
+				}
+			},
+			"examples": [
+				{
+					"username": "danvo",
+					"password": "password"
+				}
+			]
+		}
+	}
+}

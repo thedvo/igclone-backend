@@ -1,0 +1,27 @@
+{
+	"$schema": "https://json-schema.org/draft/2019-09/schema",
+	"$id": "http://example.com/example.json",
+	"type": "object",
+	"properties": {
+		"postNew": {
+			"type": "object",
+			"required": ["image_file", "caption"],
+			"properties": {
+				"image_file": {
+					"type": "string",
+					"minLength": 4
+				},
+				"caption": {
+					"type": "string",
+					"minLength": 1
+				}
+			},
+			"examples": [
+				{
+					"image_file": "image.jpg",
+					"caption": "photography is fun"
+				}
+			]
+		}
+	}
+}

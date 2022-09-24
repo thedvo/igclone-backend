@@ -1,0 +1,22 @@
+{
+	"$schema": "https://json-schema.org/draft/2019-09/schema",
+	"$id": "http://example.com/example.json",
+	"type": "object",
+	"properties": {
+		"commentNew": {
+			"type": "object",
+			"required": ["comment"],
+			"properties": {
+				"comment": {
+					"type": "string"
+				}
+			},
+			"examples": [
+				{
+					"comment": "cool picture",
+					"minLength": 1
+				}
+			]
+		}
+	}
+}
