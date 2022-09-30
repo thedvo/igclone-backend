@@ -42,6 +42,8 @@ describe('findAll posts', function () {
 		let posts = await Post.findAll();
 
 		posts.map((p) => (p.datePosted = 100));
+		// reason we set datePosted is to mimic a mock timestamp
+
 		console.log(posts);
 
 		// console.log(editedPosts);
@@ -81,6 +83,7 @@ describe('get an individual post by its ID', function () {
 	it('works', async function () {
 		let post = await Post.get(testPostIds[0]);
 
+		// reason we set datePosted is to mimic a mock timestamp
 		post.datePosted = 100;
 
 		expect(post).toEqual({
