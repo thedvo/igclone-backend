@@ -14,7 +14,7 @@ beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
 
-/************************************** create */
+/************************************** CREATE A POST */
 
 describe('create a post', function () {
 	let newPost = {
@@ -36,6 +36,8 @@ describe('create a post', function () {
 		);
 	});
 });
+
+/************************************** GET ALL POSTS */
 
 describe('findAll posts', function () {
 	it('works', async function () {
@@ -78,6 +80,8 @@ describe('findAll posts', function () {
 		]);
 	});
 });
+
+/************************************** GET A POST */
 
 describe('get an individual post by its ID', function () {
 	it('works', async function () {
@@ -123,6 +127,8 @@ describe('get an individual post by its ID', function () {
 		}
 	});
 });
+
+/************************************** REMOVE A POST */
 
 describe('remove post', function () {
 	it('works', async function () {
