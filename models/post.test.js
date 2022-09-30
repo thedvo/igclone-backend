@@ -76,3 +76,66 @@ describe('findAll posts', function () {
 		]);
 	});
 });
+
+describe('get an individual post by its ID', function () {
+	it('works', async function () {
+		let post = await Post.get(testPostIds[0]);
+
+		post.datePosted = 100;
+
+		expect(post).toEqual({
+			postId: testPostIds[0],
+			imageFile: 'img.jpg',
+			caption: 'test!',
+			datePosted: 100,
+			user: [
+				{
+					id: 1000,
+					username: 'testuser1',
+					profileImage: 'img.png',
+				},
+			],
+			likes: [
+				{
+					userId: 1000,
+					username: 'testuser1',
+				},
+			],
+			comments: [
+				{
+					commentId: 500,
+					comment: 'awesome picture!',
+					username: 'testuser1',
+				},
+			],
+		});
+	});
+
+	it('shows not found if no such post exists', async function () {
+		try {
+			await Post.get(0);
+			fail();
+		} catch (err) {
+			expect(err instanceof NotFoundError).toBeTruthy();
+		}
+	});
+});
+
+describe('remove post', function () {
+	it('works', async function () {
+		await Post.remove(testPostIds[0]);
+		const res = await db.query('SELECT id FROM posts WHERE id=$1', [
+			testPostIds[0],
+		]);
+		expect(res.rows.length).toEqual(0);
+	});
+
+	it('shows not found if no such post', async function () {
+		try {
+			await Post.remove(0);
+			fail();
+		} catch (err) {
+			expect(err instanceof NotFoundError).toBeTruthy();
+		}
+	});
+});
