@@ -4,6 +4,7 @@ const Post = require('../models/post');
 const { createToken } = require('../helpers/tokens');
 
 const testPostIds = [];
+const testUserIds = [];
 
 async function commonBeforeAll() {
 	// noinspection SqlWithoutWhere
@@ -16,9 +17,8 @@ async function commonBeforeAll() {
 			{
 				image_file: 'test.png',
 				caption: 'test caption',
-				user_id: 1,
 			},
-			'u1'
+			'user1'
 		)
 	).id;
 	testPostIds[1] = (
@@ -26,9 +26,8 @@ async function commonBeforeAll() {
 			{
 				image_file: 'test.png',
 				caption: 'test caption',
-				user_id: 1,
 			},
-			'u1'
+			'user1'
 		)
 	).id;
 	testPostIds[2] = (
@@ -36,33 +35,41 @@ async function commonBeforeAll() {
 			{
 				image_file: 'test.png',
 				caption: 'test caption',
-				user_id: 1,
 			},
-			'u2'
+			'user2'
 		)
 	).id;
 
-	await User.register({
-		username: 'u1',
-		firstName: 'U1F',
-		lastName: 'U1L',
+	testUserIds[0] = await User.register({
+		username: 'user1',
+		firstName: 'firstname1',
+		lastName: 'lastname1',
 		email: 'user1@user.com',
 		password: 'password1',
-	});
-	await User.register({
-		username: 'u2',
-		firstName: 'U2F',
-		lastName: 'U2L',
+	}).id;
+	testUserIds[1] = await User.register({
+		username: 'user2',
+		firstName: 'firstname2',
+		lastName: 'lastname2',
 		email: 'user2@user.com',
 		password: 'password2',
-	});
-	await User.register({
-		username: 'u3',
-		firstName: 'U3F',
-		lastName: 'U3L',
+	}).id;
+	testUserIds[2] = await User.register({
+		username: 'user3',
+		firstName: 'firstname3',
+		lastName: 'lastname3',
 		email: 'user3@user.com',
 		password: 'password3',
-	});
+	}).id;
+
+	await User.addLike('user1', testPostIds[1]);
+	await User.addLike('user2', testPostIds[0]);
+
+	await User.followUser('user1', testUserIds[1]);
+	await User.followUser('user2', testUserIds[2]);
+
+	await User.addComment('user1', testPostIds[1], 'awesome!');
+	await User.addComment('user2', testPostIds[0], 'congratulations');
 }
 
 async function commonBeforeEach() {
@@ -77,8 +84,8 @@ async function commonAfterAll() {
 	await db.end();
 }
 
-const u1Token = createToken({ username: 'u1', isAdmin: false });
-const u2Token = createToken({ username: 'u2', isAdmin: false });
+const u1Token = createToken({ username: 'user1', isAdmin: false });
+const u2Token = createToken({ username: 'user2', isAdmin: false });
 
 module.exports = {
 	commonBeforeAll,
@@ -86,6 +93,7 @@ module.exports = {
 	commonAfterEach,
 	commonAfterAll,
 	testPostIds,
+	testUserIds,
 	u1Token,
 	u2Token,
 };
