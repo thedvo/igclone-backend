@@ -24,9 +24,10 @@ class Post {
 			WHERE username = $1`,
 			[username]
 		);
-		const userId = userResult.rows[0].id;
+		if (userResult.rows.length === 0)
+			throw new NotFoundError(`No record of user: ${username}`);
 
-		if (!userId) throw new NotFoundError(`No record of user: ${username}`);
+		const userId = userResult.rows[0].id;
 
 		// user the req.body information passed to this create() method along with the userId queried above to insert the data into the Posts table.
 		const result = await db.query(
